@@ -1,0 +1,29 @@
+version: "2"
+services:
+  app:
+    build: .
+    image: employee-jdbc:latest
+    ports:
+      - "8089:8080"
+    networks:
+      - employee-mysql
+    depends_on:
+      - db
+    container_name: employee-jdbc-container
+  db:
+    image: mysql:5.7
+    volumes:
+      - ahihi:/var/lib/mysql
+    networks:
+      - employee-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bootdb
+    container_name: mysqldb
+networks:
+  employee-mysql:
+    external: true
+volumes:
+  ahihi:
+    external: true
+
